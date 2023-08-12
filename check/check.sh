@@ -5,7 +5,7 @@ adminEmailArray=("xxx@qq.com")
 #不能修改的文件数组
 fileNameArray=("Podfile" "pod.sh" )
 #检查的分支数组
-checkBranches=("dev1 dev2 master main")
+#checkBranches=("dev1 dev2 master main")
 #修改的文件
 modifyFileNames=$(git diff --cached --name-only --diff-filter=ACM --)
 if [ -n "${1}" ]; then
@@ -32,17 +32,26 @@ info() {
 
 #是否可以修改，0不可以，1可以
 canModify() {
-    #1、当前分支是否在检查的范围内
-    containBranch=0
-    for value in ${checkBranches[@]}
-    do 
-        if [[ ${branch} -eq value ]]; then
-            containBranch=1
+    #0.账号是否有权限
+    for value in ${adminEmailArray[@]}
+    do
+        if [[ ${email} == $value  ]]; then
+            return 1
         fi
-    done
-    if [[ ${containBranch} == 0 ]]; then
-        return 1
-    fi
+    done;
+    
+    
+    #1、当前分支是否在检查的范围内
+    # containBranch=0
+    # for value in ${checkBranches[@]}
+    # do 
+    #     if [[ ${branch} == value ]]; then
+    #         containBranch=1
+    #     fi
+    # done
+    # if [[ ${containBranch} == 0 ]]; then
+    #     return 1
+    # fi
 
     #2、修改的文件是否在检查范围内
     if [[ ${modifyFileNames} == *$1* ]]; then
@@ -61,6 +70,7 @@ checkFiles() {
          return 0
         fi
     done;
+    log "可以提交修改"
     return 1
 }
 
