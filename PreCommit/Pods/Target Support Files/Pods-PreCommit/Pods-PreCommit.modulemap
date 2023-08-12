@@ -1,0 +1,6 @@
+framework module Pods_PreCommit {
+  umbrella header "Pods-PreCommit-umbrella.h"
+
+  export *
+  module * { export * }
+}
