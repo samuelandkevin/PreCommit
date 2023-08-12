@@ -5,7 +5,7 @@ adminEmailArray=("xxx@qq.com")
 #不能修改的文件数组
 fileNameArray=("Podfile" "pod.sh" )
 #检查的分支数组
-checkBranches=("dev1 dev2 master")
+checkBranches=("dev1 dev2 master main")
 #修改的文件
 modifyFileNames=$(git diff --cached --name-only --diff-filter=ACM --)
 if [ -n "${1}" ]; then
